@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>You love me?</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #ff4d6d, #ff9aa2);
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+      flex-direction: column;
+    }
+    .box {
+      background: white;
+      padding: 40px 60px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      position: relative;
+    }
+    h1 {
+      margin-bottom: 30px;
+      color: #333;
+      font-size: 28px;
+    }
+    .buttons {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 140px;
+    }
+    button {
+      padding: 12px 28px;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 18px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    #yesBtn {
+      background: #ff4d6d;
+      color: white;
+      box-shadow: 0 4px 15px rgba(255,77,109,0.4);
+    }
+    #yesBtn:hover {
+      background: #e63950;
+      transform: scale(1.1);
+    }
+    #noBtn {
+      background: #ddd;
+      color: #333;
+      position: relative;
+    }
+    #message {
+      margin-top: 25px;
+      font-size: 22px;
+      font-weight: bold;
+      color: #ff1744;
+      display: none;
+    }
+    .heart {
+      position: absolute;
+      font-size: 24px;
+      animation: floatUp 2s linear forwards;
+      pointer-events: none;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(-200px); opacity: 0; }
+    }
+    .footer {
+      position: absolute;
+      bottom: 10px;
+      font-size: 16px;
+      color: white;
+      font-style: italic;
+      text-shadow: 0 0 5px rgba(0,0,0,0.3);
+    }
+    .footer span {
+      font-weight: bold;
+      color: #ffe600;
+    }
+  </style>
+</head>
+<body>
+  <div class="box" id="box">
+    <h1>Do you love me?</h1>
+    <div class="buttons">
+      <button id="yesBtn">Yes</button>
+      <button id="noBtn">No</button>
+    </div>
+    <div id="message">I love you too ❤️</div>
+  </div>
+
+  <p class="footer">Created by <span>A_rehman</span></p>
+
+  <script>
+    const yesBtn = document.getElementById('yesBtn');
+    const noBtn = document.getElementById('noBtn');
+    const message = document.getElementById('message');
+    const box = document.getElementById('box');
+
+    yesBtn.addEventListener('click', () => {
+      message.style.display = 'block';
+      spawnHearts();
+    });
+
+    // Instant dodge logic
+    noBtn.addEventListener('mouseenter', () => {
+      const boxRect = box.getBoundingClientRect();
+      const maxX = boxRect.width - noBtn.offsetWidth - 20;
+      const maxY = boxRect.height - noBtn.offsetHeight - 20;
+
+      const x = Math.random() * maxX;
+      const y = Math.random() * maxY;
+
+      noBtn.style.position = 'absolute';
+      noBtn.style.left = x + 'px';
+      noBtn.style.top = y + 'px';
+    });
+
+    // Hearts animation
+    function spawnHearts() {
+      for (let i = 0; i < 10; i++) {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.textContent = '❤️';
+        document.body.appendChild(heart);
+
+        const x = Math.random() * window.innerWidth;
+        const y = window.innerHeight - 50;
+        heart.style.left = x + 'px';
+        heart.style.top = y + 'px';
+
+        setTimeout(() => heart.remove(), 2000);
+      }
+    }
+  </script>
+</body>
+</html>
